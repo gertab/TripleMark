@@ -7,8 +7,14 @@
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
+			<key>footerCellClass</key>
+			<string>trippleMarkCustomCell</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
 			<key>label</key>
-			<string>Replace the tripple space output text</string>
+			<string>Set the tripple space output text below</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -23,6 +29,40 @@
             <string>me.tabone.tripplemarkprefs/preferences.changed</string>
 			<key>defaults</key>
 			<string>me.tabone.tripplemarkprefs</string>
+            <key>placeholder</key>
+            <string>The default is "?"</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Donate</string>
+		</dict>
+        <dict>
+            <key>cell</key> 		
+            <string>PSButtonCell</string>
+            <key>label</key> 		
+            <string>Donate via PayPal</string>
+            <key>action</key> 		
+            <string>donate</string>
+			<key>icon</key>
+			<string>paypal.png</string>
+        </dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Send bug and features to the developer.</string>
+			<key>footerText</key>
+			<string>By Gerard</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSButtonCell</string>
+			<key>action</key>
+			<string>mailGertab</string>
+			<key>label</key>
+			<string>Email</string>
 		</dict>
 	</array>
 	<key>title</key>
