@@ -1,9 +1,9 @@
-Package: me.tabone.tripplemark
-Name: TrippleMark
+Package: me.tabone.triplemark
+Name: TripleMark
 Depends: mobilesubstrate
 Version: 0.1
 Architecture: iphoneos-arm
-Description: Tripple press the space bar to input a question mark
+Description: Triple press the space bar to input a question mark
 Maintainer: gertab <gerardtabone+tm@gmail.com>
 Author: gertab <gerardtabone+tm@gmail.com>
 Section: Tweaks

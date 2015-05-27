@@ -1,13 +1,13 @@
 #import <Preferences/Preferences.h>
 
-@interface TrippleMarkPrefsListController: PSListController {
+@interface TripleMarkPrefsListController: PSListController {
 }
 @end
 
-@implementation TrippleMarkPrefsListController
+@implementation TripleMarkPrefsListController
 - (id)specifiers {
 	if(_specifiers == nil) {
-		_specifiers = [[self loadSpecifiersFromPlistName:@"TrippleMarkPrefs" target:self] retain];
+		_specifiers = [[self loadSpecifiersFromPlistName:@"TripleMarkPrefs" target:self] retain];
 	}
 	return _specifiers;
 }
@@ -41,13 +41,13 @@ int width = [[UIScreen mainScreen] bounds].size.width;
 -(CGFloat)preferredHeightForWidth:(CGFloat)arg1 inTableView:(id)arg2;
 @end
 
-@interface trippleMarkCustomCell : PSTableCell <PreferencesTableCustomView> {
+@interface tripleMarkCustomCell : PSTableCell <PreferencesTableCustomView> {
     UILabel *_label;
     UILabel *underLabel;
 }
 @end
 
-@implementation trippleMarkCustomCell
+@implementation tripleMarkCustomCell
 -(id)initWithSpecifier:(PSSpecifier *)specifier
 {
     //self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell" specifier:specifier];
@@ -59,7 +59,7 @@ int width = [[UIScreen mainScreen] bounds].size.width;
         _label = [[UILabel alloc] initWithFrame:frame];
         [_label setNumberOfLines:1];
         _label.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:48];
-        [_label setText:@"TrippleMark"];
+        [_label setText:@"TripleMark"];
         [_label setBackgroundColor:[UIColor clearColor]];
         _label.textColor = [UIColor blackColor];
         _label.textAlignment = NSTextAlignmentCenter;
@@ -83,11 +83,5 @@ int width = [[UIScreen mainScreen] bounds].size.width;
 -(CGFloat)preferredHeightForWidth:(CGFloat)arg1 {
     CGFloat prefHeight = 90.0;
     return prefHeight;
-}
-@end
-
-@interface CreditsHeaderCustomCell : PSTableCell <PreferencesTableCustomView> {
-    UILabel *_label;
-    UILabel *underLabel;
 }
 @end

@@ -1,11 +1,18 @@
 #define log(BOOL) BOOL ? @"YES" : @"NO"
+#include <CoreFoundation/CFNotificationCenter.h>
+#import <Foundation/NSUserDefaults.h>
+#import <Foundation/NSString.h>
+
+// Settings variables
+static NSString *textToPrint;
+
 
 @interface UIKeyboardImpl : UIView
 - (void)deleteBackward;
 @end
 
-static BOOL isDoubleEntering = NO;
-static BOOL isTrippleEntering = NO;
+static BOOL EnteredSpaceTwice = NO;
+static BOOL EnteredSpaceThreeTimes = NO;
 
 // Keeping count of the previous characters written to prevent multiple inputs of the question mark when unnecessary
 // If not a valid character (e.g. "?" or " ") -> NO
@@ -37,9 +44,9 @@ static BOOL tempCharacterWritten = NO;
     secondCharacterWritten = firstCharacterWritten;
     firstCharacterWritten = tempCharacterWritten;
 
-    if (!isTrippleEntering && startTime && prevText) {
+    if (!EnteredSpaceThreeTimes && startTime && prevText) {
         NSTimeInterval elapsedTime = -1.0 * [startTime timeIntervalSinceNow];
-        isDoubleEntering = (elapsedTime < 0.2 && [text isEqualToString:@" "] && [prevText isEqualToString:text]) ? YES : NO;
+        EnteredSpaceTwice = (elapsedTime < 0.2 && [text isEqualToString:@" "] && [prevText isEqualToString:text]) ? YES : NO;
         [startTime release];
         [prevText release];
     }
@@ -52,20 +59,83 @@ static BOOL tempCharacterWritten = NO;
 
 - (void)insertText:(NSString *)text
 {
-    if ([text isEqualToString:@" "] && isTrippleEntering && !firstCharacterWritten && !secondCharacterWritten  && !thirdCharacterWritten && fourthCharacterWritten) {
+    
+    if ([text isEqualToString:@" "] && EnteredSpaceThreeTimes && !firstCharacterWritten && !secondCharacterWritten  && !thirdCharacterWritten && fourthCharacterWritten) {
         // Should replace " " with "?" only if the user has written any character(s) before (exlude multiple consecutive"?"s)
         [self deleteBackward];     
         [self deleteBackward];
-        isTrippleEntering = NO;
+        EnteredSpaceThreeTimes = NO;
 
-        %orig(@"? ");
-    } else if (isDoubleEntering) { 
-        isTrippleEntering = YES;
-        isDoubleEntering = NO;
+        %orig(textToPrint);
+    } else if (EnteredSpaceThreeTimes && !([textToPrint isEqualToString:@"?"] || [textToPrint isEqualToString:@"!"] || [textToPrint isEqualToString:@"? "] || [textToPrint isEqualToString:@"! "] || [textToPrint isEqualToString:@"?  "] || [textToPrint isEqualToString:@"!  "])) {
+        [self deleteBackward];     
+        [self deleteBackward];
+        EnteredSpaceThreeTimes = NO;
+
+        %orig(textToPrint);
+    } else if (EnteredSpaceTwice) { 
+        EnteredSpaceThreeTimes = YES;
+        EnteredSpaceTwice = NO;
         %orig;
     } else {
-        isTrippleEntering = NO;
+        EnteredSpaceThreeTimes = NO;
         %orig;
     }
 }
 %end
+
+
+// Settings
+
+
+
+ static NSString *domainString = @"me.tabone.triplemarkprefs";
+static NSString *notificationString = @"me.tabone.triplemarkprefs/preferences.changed";
+@interface NSUserDefaults (TripleM)
+- (id)objectForKey:(NSString *)key inDomain:(NSString *)domain;
+- (void)setObject:(id)value forKey:(NSString *)key inDomain:(NSString *)domain;
+@end
+
+static void notificationCallback(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo) {
+    NSString *n = (NSString *)[[NSUserDefaults standardUserDefaults] objectForKey:@"text" inDomain:domainString];
+    textToPrint = [n copy];
+    if ([textToPrint length] == 0)
+    {
+        textToPrint = @"?...";
+    }
+}
+
+%ctor {
+    NSAutoreleasePool *pool = [NSAutoreleasePool new];
+    //set initial `enable' variable
+    notificationCallback(NULL, NULL, NULL, NULL, NULL);
+
+    //register for notifications
+    CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, notificationCallback, (CFStringRef)notificationString, NULL, CFNotificationSuspensionBehaviorCoalesce);
+    [pool release];
+}
+
+/*
+static void LoadSettings()
+{
+    NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:domainString];
+
+    textToPrint = [dict objectForKey:@"text"];
+    if ([textToPrint isEqualToString:@""])
+    {
+        textToPrint = @"?....";
+    }
+}
+
+static void PostNotification(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo)
+{
+    LoadSettings();
+}
+
+%ctor
+{
+    @autoreleasepool {
+        CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, PostNotification, CFSTR("me.tabone.triplemarkprefs/preferences.changed"), NULL, CFNotificationSuspensionBehaviorCoalesce);
+        LoadSettings();
+    }
+}*/

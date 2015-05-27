@@ -8,13 +8,13 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>footerCellClass</key>
-			<string>trippleMarkCustomCell</string>
+			<string>tripleMarkCustomCell</string>
 		</dict>
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
-			<string>Set the tripple space output text below</string>
+			<string>Set the triple space output text below</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -26,9 +26,9 @@
 			<key>bestGuess</key>
 			<string>? </string>
             <key>PostNotification</key>
-            <string>me.tabone.tripplemarkprefs/preferences.changed</string>
+            <string>me.tabone.triplemarkprefs/preferences.changed</string>
 			<key>defaults</key>
-			<string>me.tabone.tripplemarkprefs</string>
+			<string>me.tabone.triplemarkprefs</string>
             <key>placeholder</key>
             <string>The default is "?"</string>
 		</dict>
@@ -66,6 +66,6 @@
 		</dict>
 	</array>
 	<key>title</key>
-	<string>TrippleMark</string>
+	<string>TripleMark</string>
 </dict>
 </plist>

@@ -5,9 +5,9 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
-	<string>TrippleMarkPrefs</string>
+	<string>TripleMarkPrefs</string>
 	<key>CFBundleIdentifier</key>
-	<string>me.tabone.tripplemarkprefs</string>
+	<string>me.tabone.triplemarkprefs</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>
@@ -23,6 +23,6 @@
 	<key>MinimumOSVersion</key>
 	<string>3.0</string>
 	<key>NSPrincipalClass</key>
-	<string>TrippleMarkPrefsListController</string>
+	<string>TripleMarkPrefsListController</string>
 </dict>
 </plist>
