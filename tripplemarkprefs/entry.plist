@@ -1,0 +1,10 @@
+{
+    entry = {
+	bundle = tripplemarkprefs;
+	cell = PSLinkCell;
+	detail = tripplemarkprefsListController;
+	icon = tripplemarkprefs.png;
+	isController = 1;
+	label = tripplemarkprefs;
+    };
+}
